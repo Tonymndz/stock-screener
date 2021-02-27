@@ -292,7 +292,7 @@ function TrendingStocks() {
   return <div className='mt-2'>
     <h2 className='mt-5 mb-1 text-3xl font-bold text-gray-100 tracking-wide ml-1'>Trending Stocks</h2>
     <hr className='border-gray-500 mb-3' />
-    <div className="grid gap-5 grid-cols-3 sm:grid-cols-13">
+    <div className="grid gap-5 grid-cols-3 sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-9  xl:grid-cols-13 ">
       {trendingStocks.slice(0, 26).map(trendingStock => <TrendingStock key={trendingStock.ticker} {...trendingStock} />)}
     </div>
   </div>

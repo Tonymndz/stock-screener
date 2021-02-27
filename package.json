@@ -1,7 +1,6 @@
 {
   "name": "stock-data",
   "homepage": "http://Tonymndz.github.io/stock-screener",
-
   "version": "0.1.0",
   "private": true,
   "dependencies": {
