@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/stock-screener/static/css/main.09dff381.chunk.css",
+    "main.js": "/stock-screener/static/js/main.10d0f4f6.chunk.js",
+    "main.js.map": "/stock-screener/static/js/main.10d0f4f6.chunk.js.map",
+    "runtime-main.js": "/stock-screener/static/js/runtime-main.f4058751.js",
+    "runtime-main.js.map": "/stock-screener/static/js/runtime-main.f4058751.js.map",
+    "static/js/2.08ba9a62.chunk.js": "/stock-screener/static/js/2.08ba9a62.chunk.js",
+    "static/js/2.08ba9a62.chunk.js.map": "/stock-screener/static/js/2.08ba9a62.chunk.js.map",
+    "static/js/3.111c8a5b.chunk.js": "/stock-screener/static/js/3.111c8a5b.chunk.js",
+    "static/js/3.111c8a5b.chunk.js.map": "/stock-screener/static/js/3.111c8a5b.chunk.js.map",
+    "index.html": "/stock-screener/index.html",
+    "static/css/main.09dff381.chunk.css.map": "/stock-screener/static/css/main.09dff381.chunk.css.map",
+    "static/js/2.08ba9a62.chunk.js.LICENSE.txt": "/stock-screener/static/js/2.08ba9a62.chunk.js.LICENSE.txt",
+    "static/media/StockIcon.80a0346b.png": "/stock-screener/static/media/StockIcon.80a0346b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f4058751.js",
+    "static/js/2.08ba9a62.chunk.js",
+    "static/css/main.09dff381.chunk.css",
+    "static/js/main.10d0f4f6.chunk.js"
+  ]
+}
