@@ -9,11 +9,11 @@ import { Link, getMatchingStocks } from './Api'
 import Logo from './StockIcon.png'
 
 const App = () => {
-  return <div className="App">
+  return <div className="App min-h-screen">
     <NavBar />
     <Switch>
-      <Route path='/profile/:id' component={StockPage} />
-      <Route path='/' component={HomePage} />
+      <Route path='/stock-screener/profile/:id' exact component={StockPage} />
+      <Route path='/stock-screener' exact component={HomePage} />
     </Switch>
   </div>;
 }
@@ -33,9 +33,8 @@ const NavBar = () => {
   const [text, setText] = useState('')
   const { data: stockNames, error } = useQuery(`${text}`, () => getMatchingStocks(text))
   if (error) return <Alert severity="error">Unable to get stock data after 3 attempts...</Alert>
-
   return <div className="flex pt-1 pb-1 mb-4">
-    <Link to='/' className='inline-block'>
+    <Link to='/stock-screener' className='inline-block'>
       <img className='inline-block rounded-md w-14 pl-1 ml-1 mr-3' src={Logo} alt=''/>
     </Link>
     <Autocomplete
@@ -46,7 +45,7 @@ const NavBar = () => {
       noOptionsText={null}
       onInputChange={(evt, input) => setText(input)}
       options={stockNames || []}
-      onChange={(evt, option) => option && history.push(`/profile/${option.symbol}`)} // Runs when you pick an option OR after an option has been picked and text is deleted
+      onChange={(evt, option) => option && history.push(`stock-screener/profile/${option.symbol}`)} // Runs when you pick an option OR after an option has been picked and text is deleted
       getOptionLabel={(option) => `${option.symbol} - ${option.name || ''}` }
       renderInput={(params) =>
         <div className='pr-2 pt-1' ref={params.InputProps.ref}>

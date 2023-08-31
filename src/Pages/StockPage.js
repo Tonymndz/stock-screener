@@ -11,9 +11,8 @@ function StockPage(props) {
   const { id: symbol } = props.match.params
   const { data: stock, isLoading, error } = useQuery(`${symbol} Profile`, () => getStock(symbol))
   if (isLoading) return <CircularProgress />
-  if (error) return <Alert severity="error">Unable to get stock data after 3 attempts...</Alert>
-  if (!stock || Object.keys(stock).length === 0) return <Alert severity="error">Stock does not exist!</Alert>
-
+  if (error || !stock || Object.keys(stock).length === 0) return <Alert severity="error">Unable to get stock data after 3 attempts or malformatted Stock Data...</Alert>
+  
   const { image: logo, price, companyName, changes } = stock
   return <div className='mx-4 mb-4 text-white'>
     <StockChart logo={logo} price={price} symbol={symbol} companyName={companyName} changes={changes} />
@@ -27,7 +26,8 @@ function StockPage(props) {
 function StockChart({ symbol, logo, price, companyName, changes }) {
   const { data: stockHistorical, isLoading, error } = useQuery(`${symbol} Historical`, () => getStockHistory(symbol))
   if (isLoading) return <CircularProgress />
-  if (error) return <Alert severity="error">Unable to get stock data after 3 attempts...</Alert>
+  if (error || !stockHistorical || stockHistorical[0] || Object.keys(stockHistorical).length === 0 || stockHistorical.hasOwnProperty("Error Message")) 
+      return <Alert severity="error">Unable to get stock data after 3 attempts or malformatted Stock Data...</Alert>
   const percentChange = change2Percent(price, changes);
   const stockTitleProps = { percentChange, logo, companyName, symbol, price }
   if (!stockHistorical || Object.keys(stockHistorical).length === 0) return <StockTitle {...stockTitleProps} />
@@ -144,7 +144,7 @@ const StockTitle = ({ percentChange, logo, companyName, symbol, price }) =>
     </div>
     <div className="mr-2 grid sm:flex items-center">
       <h1 className='inline-block text-xl font-bold text-gray-100 tracking-wide ml-1 md:text-4xl'>${numCommaFormat(price)}</h1>
-      <h1 className={`${percentChange >= 0 ? 'text-green-400' : 'text-red-400'} inline-block mr-2 text-base font-bold text-gray-100 tracking-wide ml-1 md:text-3xl`}>({percentChange >= 0 ? '+' + percentChange : percentChange }%)</h1>
+      <h1 className={`${percentChange >= 0 ? 'text-green-400' : 'text-red-400'} inline-block mr-2 text-base font-bold text-gray-100 tracking-wide ml-1 md:text-3xl`}>({percentChange >= 0 ? '+' + percentChange : percentChange }% today)</h1>
     </div>
   </div>
 
@@ -154,9 +154,10 @@ function About({ description, ceo, fullTimeEmployees, city, ipoDate, exchange, c
   const [expand, setExpand] = useState(false);
   const { data: stockQuota, isLoading, error } = useQuery(`${symbol} Quota`, () => getStockQuota(symbol));
   if (isLoading) return <CircularProgress />
-  if (error) return <Alert severity="error">Unable to get stock data after 3 attempts...</Alert>
-  if (!stockQuota || Object.keys(stockQuota).length === 0) return null
+  if (error || !stockQuota || stockQuota[0] || Object.keys(stockQuota).length === 0 || stockQuota.hasOwnProperty("Error Message")) 
+      return <Alert severity="error">Unable to get stock data after 3 attempts or malformatted Stock Data...</Alert>
   
+  console.log("stockQuota: ", stockQuota)
   const { dayLow, dayHigh, yearHigh, yearLow } = stockQuota;
   return <div className="">
     <h2 className='mt-5 mb-1 text-3xl font-bold text-gray-100 tracking-wide ml-1'>About</h2>
@@ -164,7 +165,7 @@ function About({ description, ceo, fullTimeEmployees, city, ipoDate, exchange, c
     {description && <ReadMore 
       isExpanded={expand}
       more={<p className='mb-5 text-blue-100'>{description}</p>}
-      less={<p className='mb-5 text-blue-100'>{cutLongText(description, 300)}<span className='text-green-500' onClick={() => setExpand(true)}> Show More</span></p>}
+      less={<p className='mb-5 text-blue-100'>{cutLongText(description, 300)}<span className='text-green-500 hover:text-green-200 underline cursor-pointer' onClick={() => setExpand(true)}>Show More</span></p>}
     />}
     <div className="grid gap-6 grid-cols-3 sm:grid-cols-5">
       <div className="">
@@ -212,10 +213,11 @@ function About({ description, ceo, fullTimeEmployees, city, ipoDate, exchange, c
 }
 function News({ symbol }) {
   const { data: news, isLoading, error } = useQuery(`${symbol} News`, () => getStockNews(symbol))
+  console.log("news: ", news)
   if (isLoading) return <CircularProgress />
-  if (error) return <Alert severity="error">Unable to get stock data after 3 attempts...</Alert>
-  if (!news || Object.keys(news).length === 0) return null
-  
+  if (error || !news || Object.keys(news).length === 0 || news.hasOwnProperty("Error Message")) 
+      return <Alert severity="error">Unable to get stock data after 3 attempts or malformatted Stock Data...</Alert>
+
   return <div className=''>
     <h2 className='mt-5 mb-1 text-3xl font-bold text-gray-100 tracking-wide ml-1'>News</h2>
     <hr className='border-gray-500 mb-2' />
@@ -235,7 +237,7 @@ function SingleNews({ image, title, site, publishedDate, url, text, symbol }) {
       <p className='text-blue-100'>{cutLongText(text, 100)}</p>
     </div>
     <div>
-      <img className='w-max my-10' src={image} alt={`${site} news on ${symbol}`}/>
+      <img className='w-max mt-5' src={image} alt={`${site} news on ${symbol}`}/>
     </div>
   </a>
 }
@@ -243,9 +245,10 @@ function SingleNews({ image, title, site, publishedDate, url, text, symbol }) {
 function Ratings({ symbol }) {
   const { data: stockRating, isLoading, error } = useQuery(`${symbol} Rating`, () => getStockRating(symbol))
   if (isLoading) return <CircularProgress />
-  if (error) return <Alert severity="error">Unable to get stock ratings after 3 attempts...</Alert>
-  if (!stockRating || Object.keys(stockRating).length === 0) return null // If the API doesn't have the ratings, the response is nothing/undefined
+  if (error || !stockRating || stockRating[0] || Object.keys(stockRating).length === 0 || stockRating.hasOwnProperty("Error Message")) 
+    return <Alert severity="error">Unable to get stock ratings after 3 attempts...</Alert>
 
+    console.log("stockRating: ", stockRating)
   const {
     ratingDetailsDCFRecommendation, ratingDetailsROERecommendation,
     ratingDetailsROARecommendation, ratingDetailsDERecommendation,
@@ -287,29 +290,35 @@ function Ratings({ symbol }) {
 function TrendingStocks() {
   const { data: trendingStocks, isLoading, error } = useQuery('Trending Stocks', getTrendingStocks)
   if (isLoading) return <CircularProgress />
-  if (error) return <Alert severity="error">Unable to get trending stocks after 3 attempts...</Alert>
+  if (error || !trendingStocks || Object.keys(trendingStocks).length === 0 || trendingStocks.hasOwnProperty("Error Message")) 
+    return <Alert severity="error">Unable to get stock ratings after 3 attempts...</Alert>
 
   return <div className='mt-2'>
     <h2 className='mt-5 mb-1 text-3xl font-bold text-gray-100 tracking-wide ml-1'>Trending Stocks</h2>
     <hr className='border-gray-500 mb-3' />
     <div className="grid gap-5 grid-cols-3 sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-9  xl:grid-cols-13 ">
-      {trendingStocks.slice(0, 26).map(trendingStock => <TrendingStock key={trendingStock.ticker} {...trendingStock} />)}
+      {trendingStocks.slice(0, 18).map(trendingStock => <TrendingStock key={trendingStock.ticker} {...trendingStock} />)}
     </div>
   </div>
 }
 
 const TrendingStock = ({ ticker, price, companyName, changesPercentage }) => {
-  return <Link to={`/profile/${ticker}`}>
+  return <Link to={`profile/${ticker}`}>
     <div className='pl-2 py-1 text-white rounded-sm border-gray-700 border' style={{ background: '#131515'}}>
       <h2 className='font-semibold tracking-wide leading-4'>{companyName ? cutLongText(companyName, 20) : '—'}</h2>
       <h1>{price ? '$'+numCmptFormat(price) : '—'}</h1>
-      <h3 className={`${changesPercentage.includes('+') ? 'text-green-400' : 'text-red-400'}`}>{changesPercentage ? changesPercentage : '—'}</h3>
+      <h3 className={`${changesPercentage.includes('-') ? 'text-red-400' : 'text-green-400'}`}>{formattedChangesPercentage(changesPercentage)}</h3>
     </div>
   </Link>
 }
 
 function ReadMore({ isExpanded, more, less }) {
   return isExpanded ? more : less
+}
+
+function formattedChangesPercentage(changesPercentage) {
+  if (!changesPercentage) return "—";
+  return changesPercentage.startsWith("-") ? `${numCommaFormat(changesPercentage)}%` : `+${numCommaFormat(changesPercentage)}%`
 }
 
 export default StockPage

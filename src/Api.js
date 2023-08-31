@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Link as MaterialUILink } from '@material-ui/core'
 
 export const API_URL = 'https://financialmodelingprep.com'
-export const API_KEY = '33626028241bc17deab44848242c1819'
+export const API_KEY = '493ccb87fb242d4be9448548654bf037'
 
 // to="/characters", Having '/' in the beginning replaces whole pathname else adds to pathname
 export const Link = (props) => <MaterialUILink component={RouterLink} to={props.to}>{props.children}</MaterialUILink>
@@ -19,7 +19,7 @@ export const getTrendingStocks = async () => (await axios.get(`${API_URL}/api/v3
 export const getStockHistory = async (symbol) => (await axios.get(`${API_URL}/api/v3/historical-price-full/${symbol}?apikey=${API_KEY}`)).data
 
 export const cutLongText = (text, maxLength) => text <= maxLength ? text : `${text.slice(0, maxLength)}...`
-export const trendingStocks20 = ['TSLA', 'AAPL', 'MSFT', 'GOOG', 'FB', 'GME', 'JPM', 'BABA',' WMT',
+export const homeStockSymbols = ['TSLA', 'AAPL', 'MSFT', 'GOOG', 'FB', 'GME', 'JPM', 'BABA',' WMT',
  'NVDA', 'V', 'NFLX', 'NKE', 'ADBE', 'KO', 'CSCO', 'MCD', 'UPS', 'ABNB', 'HD']
 
 const fmtCmpt = Intl.NumberFormat("en", { notation: "compact" });
