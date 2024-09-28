@@ -14,6 +14,7 @@
     "axios": "^0.21.1",
     "date-fns": "^2.17.0",
     "moment": "^2.29.1",
+    "process": "^0.11.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-highcharts": "^16.1.0",
@@ -25,18 +26,25 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
+    "start": "craco --openssl-legacy-provider start",
+    "build": "craco --openssl-legacy-provider build",
+    "test": "craco --openssl-legacy-provider test",
+    "eject": "react-scripts --openssl-legacy-provider eject",
     "predeploy": "npm run build",
-     "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9.8.6",
+    "gh-pages": "^3.1.0",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   },
   "browserslist": {
     "production": [
@@ -49,12 +57,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss7-compat": "^2.0.3",
-    "autoprefixer": "^9.8.6",
-    "gh-pages": "^3.1.0",
-    "postcss": "^7.0.35",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   }
 }

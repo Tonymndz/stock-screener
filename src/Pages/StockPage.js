@@ -8,8 +8,11 @@ import { CircularProgress } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
 function StockPage(props) {
+//   console.log("StockPage(props)");
   const { id: symbol } = props.match.params
   const { data: stock, isLoading, error } = useQuery(`${symbol} Profile`, () => getStock(symbol))
+//   console.log("symbol:", symbol);
+//   console.log("stock:", stock);
   if (isLoading) return <CircularProgress />
   if (error || !stock || Object.keys(stock).length === 0) return <Alert severity="error">Unable to get stock data after 3 attempts or malformatted Stock Data...</Alert>
   
@@ -157,7 +160,7 @@ function About({ description, ceo, fullTimeEmployees, city, ipoDate, exchange, c
   if (error || !stockQuota || stockQuota[0] || Object.keys(stockQuota).length === 0 || stockQuota.hasOwnProperty("Error Message")) 
       return <Alert severity="error">Unable to get stock data after 3 attempts or malformatted Stock Data...</Alert>
   
-  console.log("stockQuota: ", stockQuota)
+//   console.log("stockQuota: ", stockQuota)
   const { dayLow, dayHigh, yearHigh, yearLow } = stockQuota;
   return <div className="">
     <h2 className='mt-5 mb-1 text-3xl font-bold text-gray-100 tracking-wide ml-1'>About</h2>
@@ -213,7 +216,7 @@ function About({ description, ceo, fullTimeEmployees, city, ipoDate, exchange, c
 }
 function News({ symbol }) {
   const { data: news, isLoading, error } = useQuery(`${symbol} News`, () => getStockNews(symbol))
-  console.log("news: ", news)
+//   console.log("news: ", news)
   if (isLoading) return <CircularProgress />
   if (error || !news || Object.keys(news).length === 0 || news.hasOwnProperty("Error Message")) 
       return <Alert severity="error">Unable to get stock data after 3 attempts or malformatted Stock Data...</Alert>
@@ -248,7 +251,7 @@ function Ratings({ symbol }) {
   if (error || !stockRating || stockRating[0] || Object.keys(stockRating).length === 0 || stockRating.hasOwnProperty("Error Message")) 
     return <Alert severity="error">Unable to get stock ratings after 3 attempts...</Alert>
 
-    console.log("stockRating: ", stockRating)
+    // console.log("stockRating: ", stockRating)
   const {
     ratingDetailsDCFRecommendation, ratingDetailsROERecommendation,
     ratingDetailsROARecommendation, ratingDetailsDERecommendation,

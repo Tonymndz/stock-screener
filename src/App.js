@@ -45,12 +45,11 @@ const NavBar = () => {
       noOptionsText={null}
       onInputChange={(evt, input) => setText(input)}
       options={stockNames || []}
-      onChange={(evt, option) => option && history.push(`stock-screener/profile/${option.symbol}`)} // Runs when you pick an option OR after an option has been picked and text is deleted
-      getOptionLabel={(option) => `${option.symbol} - ${option.name || ''}` }
-      renderInput={(params) =>
-        <div className='pr-2 pt-1' ref={params.InputProps.ref}>
-          <input style={{ borderRadius: '9px', padding: '10px', width: '100%', background: '#1d1e1e', color: 'white' }}
-            {...params.inputProps} placeholder="Search Stocks" />
+      onChange={(evt, option) => option?.symbol != null && history.push(`/stock-screener/profile/${option.symbol}`)}// Runs when you pick an option OR after an option has been picked and text is deleted
+      getOptionLabel={(option) => `${option.symbol || ''} - ${option.name || ''}` }
+      renderInput={(params) => <div className='pr-2 pt-1' ref={params.InputProps.ref}>
+        <input style={{ borderRadius: '9px', padding: '10px', width: '100%', background: '#1d1e1e', color: 'white' }}
+          {...params.inputProps} placeholder="Search Stocks" />
         </div>
       }
     />
@@ -58,3 +57,9 @@ const NavBar = () => {
 }
 
 export default App;
+
+/**
+
+npm run deploy
+ 
+**/

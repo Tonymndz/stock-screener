@@ -2,8 +2,8 @@ import axios from 'axios'
 import { Link as RouterLink } from 'react-router-dom'
 import { Link as MaterialUILink } from '@material-ui/core'
 
-export const API_URL = 'https://financialmodelingprep.com'
-export const API_KEY = '493ccb87fb242d4be9448548654bf037'
+const API_URL = 'https://financialmodelingprep.com'
+const API_KEY = '493ccb87fb242d4be9448548654bf037'
 
 // to="/characters", Having '/' in the beginning replaces whole pathname else adds to pathname
 export const Link = (props) => <MaterialUILink component={RouterLink} to={props.to}>{props.children}</MaterialUILink>
